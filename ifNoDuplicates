@@ -1,0 +1,76 @@
+using System;
+using System.Diagnostics;
+using System.Threading;
+
+namespace sorter
+{
+    class Program
+    {
+        static void Main(string[] args)
+        {
+            int maxNum=10;
+
+            Random randNum = new Random();
+            int[] num= new int[maxNum];
+            for(int val=0; val< maxNum; val++)
+            {
+                num[val] = randNum.Next(1, maxNum);
+            }
+            int[] son = new int[maxNum];
+
+            Console.WriteLine("sorting started");
+
+            Stopwatch watch = new Stopwatch();
+            watch.Start();
+
+            int min = num[0];
+            for (int i = 0; i < maxNum; i++)
+            {
+                if (num[i] < min)
+                {
+                    min = num[i];
+                }
+            }
+            son[0] = min;
+
+            int max = num[0];
+            for (int i = 0; i < maxNum; i++)
+            {
+                if (num[i] > max)
+                {
+                    max = num[i];
+                }
+            }
+            son[maxNum-1] = max;
+
+            for (int q = 1; q < maxNum-1; q++)
+            {
+                min = max;
+                for (int i = 0; i < maxNum; i++)
+                {
+                    if (num[i] < min && son[q-1] < num[i])
+                    {
+                        //Console.Write("    min = " + num[i] + "\n");
+                        min = num[i];
+                    }
+
+                }
+                son[q] = min;
+
+            }
+
+
+            watch.Stop();
+
+
+            Console.WriteLine("\nresult");
+            foreach (int bo in son)
+            {
+                Console.WriteLine(bo);
+            }
+
+
+            Console.WriteLine("Geçen zaman: " + watch.Elapsed);
+        }
+    }
+}
